@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const NovoAluno = () => {
     const [nome, setNome] = useState("");
@@ -9,6 +10,7 @@ const NovoAluno = () => {
     const [curso, setCurso] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
+    let navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -22,15 +24,15 @@ const NovoAluno = () => {
         const data = {
             nome, sobrenome, email, curso
         };
+
         axios.post('http://localhost:8080/alunoonline/api/alunos/novo', data)
             .then(response => {
-                console.log(response.data); // Depois remover
                 setNome("");
                 setSobrenome("");
                 setEmail("");
                 setCurso("");
-                setModalMessage("Aluno cadastrado com sucesso.");
-                setShowModal(true);
+                navigate("/alunos");
+
             })
             .catch(error => {
                 console.error(error);

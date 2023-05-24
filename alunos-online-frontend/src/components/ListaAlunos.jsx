@@ -1,14 +1,35 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const ListaAlunos = () => {
     const [alunos, setAlunos] = useState([]);
+    const [nome, setNome] = useState("");
+    const [sobrenome, setSobrenome] = useState("");
+    const [email, setEmail] = useState("");
+    const [curso, setCurso] = useState("");
 
     useEffect(() => {
         axios.get("http://localhost:8080/alunoonline/api/alunos").then((response) => {
             setAlunos(response.data);
         });
     }, []);
+
+    function handleEditClick(id) {
+        const updatedData = {
+            nome, sobrenome, email, curso
+        };
+        updateAluno(id, updatedData);
+    }
+
+    const updateAluno = (id, data) => {
+
+        axios.put(`http://localhost:8080/alunoonline/api/alunos/atualizar/${id}`, data)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => console.error(error));
+    }
 
     return (
         <div className='container'>
@@ -32,6 +53,10 @@ const ListaAlunos = () => {
                                 <td> {aluno.sobrenome} </td>
                                 <td> {aluno.email} </td>
                                 <td> {aluno.curso} </td>
+                                <td>
+                                    <Link
+                                        to={`/atualizar/${aluno.id}`} className="btn btn-info">Editar</Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
