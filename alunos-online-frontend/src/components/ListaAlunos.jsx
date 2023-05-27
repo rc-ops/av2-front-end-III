@@ -15,20 +15,28 @@ const ListaAlunos = () => {
         });
     }, []);
 
-    function handleEditClick(id) {
-        const updatedData = {
-            nome, sobrenome, email, curso
-        };
-        updateAluno(id, updatedData);
-    }
+    // function handleEditClick(id) {
+    //     const updatedData = {
+    //         nome, sobrenome, email, curso
+    //     };
+    //     updateAluno(id, updatedData);
+    // }
 
-    const updateAluno = (id, data) => {
+    // const updateAluno = (id, data) => {
 
-        axios.put(`http://localhost:8080/alunoonline/api/alunos/atualizar/${id}`, data)
+    //     axios.put(`http://localhost:8080/alunoonline/api/alunos/atualizar/${id}`, data)
+    //         .then(response => {
+    //             console.log(response.data);
+    //         })
+    //         .catch(error => console.error(error));
+    // }
+
+    const deleteAluno = (id) => {
+        axios.delete(`http://localhost:8080/alunoonline/api/alunos/delete/${id}`)
             .then(response => {
-                console.log(response.data);
+                setAlunos(alunos.filter(aluno => aluno.id !== id));
             })
-            .catch(error => console.error(error));
+            .catch(error => { console.log(error) });
     }
 
     return (
@@ -54,8 +62,8 @@ const ListaAlunos = () => {
                                 <td> {aluno.email} </td>
                                 <td> {aluno.curso} </td>
                                 <td>
-                                    <Link
-                                        to={`/atualizar/${aluno.id}`} className="btn btn-info">Editar</Link>
+                                    <Link to={`/atualizar/${aluno.id}`} className="btn btn-info">Editar</Link>
+                                    <button onClick={() => deleteAluno(aluno.id)} className="btn btn-danger">Excluir</button>
                                 </td>
                             </tr>
                         ))}
