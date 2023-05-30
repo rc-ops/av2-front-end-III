@@ -8,7 +8,7 @@ const HomePage = () => {
     <>
       <div className="container">
         <div className="jumbotron">
-          <div className="page-header"><img src={logo} alt="Logo UNIESP" />;</div>
+          <div className="page-header"><img src={logo} alt="Logo UNIESP" style={{width: '25%', height:'25%'}} />;</div>
           <h2><del>Web design is my passion</del></h2>
           <br />
         </div>
